@@ -6,14 +6,14 @@ int state = 1;
 
 void setup() {
   // put your setup code here, to run once:
+  Serial.begin(9600);
   ball.attach(13);
-
   ball.write(pos);
   delay(1000);
 }
 
 void loop() {
-  
+  state = Serial.parseInt();
   switch(state) {
     case 1: //sunny
       pos = 175;
@@ -32,5 +32,5 @@ void loop() {
       break;
   }
   ball.write(pos);
-  
+
 }
