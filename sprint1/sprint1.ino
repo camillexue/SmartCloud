@@ -3,6 +3,7 @@
 Servo ball;
 int pos = 185;
 int state = 1;
+String inString = "";
 
 void setup() {
   // put your setup code here, to run once:
@@ -13,7 +14,11 @@ void setup() {
 }
 
 void loop() {
-  state = Serial.parseInt();
+  while (Serial.available() > 0) {
+     state = (int)Serial.read();
+     Serial.println(state);
+  }
+
   switch(state) {
     case 1: //sunny
       pos = 175;
