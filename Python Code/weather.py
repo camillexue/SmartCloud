@@ -8,7 +8,7 @@ obs = owm.weather_at_place('Tokyo')
 weatherCode = obs.get_weather().get_weather_code()
 
 weatherCondition = 0
-
+motorCounter = 0
 if 200 <= weatherCode < 300:
     weatherCondition = 4
 elif 300 <= weatherCode < 400:
