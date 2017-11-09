@@ -57,3 +57,19 @@ void receiveEvent() {
   }
 }
 
+void sunny() {
+  //coordinate ball positions for sunny condition
+}
+
+void rainy() {
+  //coordinate ball positions for rainy condition
+}
+
+void cloudy() {
+  //coordinate ball positions for cloudy condition
+}
+
+void night() {
+  //coordinate ball positions for night condition
+}
+
