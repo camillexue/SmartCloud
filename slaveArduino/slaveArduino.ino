@@ -5,7 +5,12 @@ int I2C_address = 9;
 int pin1 = A0;
 
 int pos;
+int top = 185;
+int middle = 100;
+int bottom = 80;
+
 int state = 1;
+
 
 Servo ball[10];
 
@@ -20,8 +25,8 @@ void setup() {
   }
 
   for (int i = 0; i < 10; i++) {
-    ball[i].attach(i+2);
-    ball[i].write(0);
+    ball[i].attach(i);
+    setPos(i, top);
   }
   
 }
@@ -47,7 +52,7 @@ void loop() {
   }
 
   for (int i = 0; i < 10; i++) {
-    ball[i].write(pos);
+    setPos(i, pos);
   }
 }
 
@@ -58,7 +63,11 @@ void receiveEvent() {
 }
 
 void sunny() {
-  //coordinate ball positions for sunny condition
+  for (int i = 0; i < 5; i++) {
+      setPos(i, top);
+      //ball[i].write(top);
+  }
+  
 }
 
 void rainy() {
@@ -69,7 +78,23 @@ void cloudy() {
   //coordinate ball positions for cloudy condition
 }
 
-void night() {
-  //coordinate ball positions for night condition
+void partcloudy() {
+  //coordinate ball positions for partcloud condition
 }
+
+void setPos(int pin, int setpos) {
+  int currentPos = ball[pin].read();
+ 
+  if (currentPos < setpos) {
+    for (int x = currentPos; x <= setpos; x += 1) {
+      ball[pin].write(x);
+      delay(50);
+    }
+  }
+  if (currentPos > setpos) {
+    for (int x = currentPos; x >= setpos; x -= 1) {
+      ball[pin].write(x);
+      delay(50);
+    }
+  
 
