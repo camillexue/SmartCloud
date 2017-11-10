@@ -5,7 +5,7 @@ int I2C_address = 9;
 int pin1 = A0;
 
 int pos;
-int top = 185;
+int top = 180;
 int middle = 100;
 int bottom = 80;
 
@@ -19,67 +19,66 @@ void setup() {
   Wire.begin(I2C_address);
   Wire.onReceive(receiveEvent);
 
-  for (int i = A0; i <= A4; i++) {
-    pinMode(i, OUTPUT);
-    digitalWrite(i, LOW);
-  }
-
   for (int i = 0; i < 10; i++) {
     ball[i].attach(i);
-    setPos(i, top);
   }
+  sunny();
   
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   switch(state) {
     case 1: //sunny
-      pos = 175;
+      sunny();
       break;
     case 2: //partly cloudy
-      pos = 145;
+      partcloudy();
       break;
     case 3: //cloudy
-      pos = 110;
+      cloudy();
       break;
     case 4: //rainy
-      pos = 80;
+      rainy();
       break;
      default: //nothing
-      pos = 185;
+      sunny();
       break;
   }
 
-  for (int i = 0; i < 10; i++) {
-    setPos(i, pos);
-  }
 }
 
-void receiveEvent() {
+void receiveEvent(int howMany) {
   while(Wire.available()) {
     state = Wire.read();
   }
 }
 
 void sunny() {
-  for (int i = 0; i < 5; i++) {
-      setPos(i, top);
-      //ball[i].write(top);
+  int positions[10] = {125,125,180,170,165,180,180,180,160,180};
+  for (int x = 0; x < 10; x++) {
+    setPos(x, positions[x]); 
   }
-  
 }
 
 void rainy() {
-  //coordinate ball positions for rainy condition
+  int positions[10] = {100, 30 ,140,40, 90,180,180,180,160,180};
+  for (int x = 0; x < 10; x++) {
+    setPos(x, positions[x]); 
+  }
 }
 
 void cloudy() {
-  //coordinate ball positions for cloudy condition
+  int positions[10] = {50,50,105,95,90,125,170,150,160,125};
+  for (int x = 0; x < 10; x++) {
+    setPos(x, positions[x]); 
+  }
 }
 
 void partcloudy() {
-  //coordinate ball positions for partcloud condition
+  int positions[10] = {125,125,125,115,110,180,180,150,160,150};
+  for (int x = 0; x < 10; x++) {
+    setPos(x, positions[x]); 
+  }
 }
 
 void setPos(int pin, int setpos) {
@@ -96,5 +95,6 @@ void setPos(int pin, int setpos) {
       ball[pin].write(x);
       delay(50);
     }
-  
+  }
+}
 

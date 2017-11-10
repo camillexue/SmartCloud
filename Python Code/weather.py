@@ -4,7 +4,7 @@ import serial
 owm = pyowm.OWM('bcd436083a8b428965a7a71697cf6c05')  # You MUST provide a valid API key
 
 # # Will it be sunny tomorrow at this time in Milan (Italy) ?
-obs = owm.weather_at_place('Tokyo')
+obs = owm.weather_at_place('Vancover')
 weatherCode = obs.get_weather().get_weather_code()
 
 weatherCondition = 0
@@ -31,4 +31,4 @@ elif 803 <= weatherCode < 804:
 print(weatherCondition)
 ser = serial.Serial('/dev/ttyACM0', 9600)
 while True:
-    ser.write(bytes([weatherCondition]))
+   ser.write(bytes([weatherCondition]))
