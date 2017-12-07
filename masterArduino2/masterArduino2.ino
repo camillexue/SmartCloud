@@ -12,6 +12,7 @@ int slaves[6] = {slaveA, slaveB, slaveC, slaveD, slaveE, slaveF};
 
 //two dimensional array of all positions
 byte allPositions[6][4];
+int motorAddresses[6][4] = {};
 
 int state = 0;
 

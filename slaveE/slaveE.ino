@@ -1,20 +1,16 @@
+#include <Wire.h>
 
-//      ******************************************************************
-//      *                                                                *
-//      *              Stepper Driver Test - UnipolarStepper             *
-//      *                                                                *
-//      *                                                                *
-//      ******************************************************************
-
+int I2C_address = 0x0E;
 
 #include <EEPROM.h>
 #include <avr/pgmspace.h>
 #include "UnipolarStepper.h"
 
-
-//
+byte positions[4] = {0, 0, 0, 0};
+byte positionBuffer[4] = {0, 0, 0, 0};
+bool newPosition = false;
 // pin assignments
-//
+
 const int MOTOR1_IN1 = A3;
 const int MOTOR1_IN2 = 2;
 const int MOTOR1_IN3 = 13;
@@ -38,47 +34,37 @@ const int MOTOR4_IN4 = 9;
 const int FULL_STEPS_PER_REVOLUTION = 2048;
 
 
-
-//
 // create the stepper motor object
-//
+
 UnipolarStepper stepper1;
 UnipolarStepper stepper2;
 UnipolarStepper stepper3;
 UnipolarStepper stepper4;
 
 
-
-// ---------------------------------------------------------------------------------
-//                              Hardware and software setup
-// ---------------------------------------------------------------------------------
-
-//
-// top level setup function
-//
-void setup()
-{ 
+void setup() {
+  Wire.begin(I2C_address);
+  Wire.onReceive(receiveEvent);
 
   stepper1.connectToPins(MOTOR1_IN1, MOTOR1_IN2, MOTOR1_IN3, MOTOR1_IN4);
   stepper2.connectToPins(MOTOR2_IN1, MOTOR2_IN2, MOTOR2_IN3, MOTOR2_IN4);
   stepper3.connectToPins(MOTOR3_IN1, MOTOR3_IN2, MOTOR3_IN3, MOTOR3_IN4);
   stepper4.connectToPins(MOTOR4_IN1, MOTOR4_IN2, MOTOR4_IN3, MOTOR4_IN4);
-  Serial.begin(9600);
+  Serial.begin(9600); 
+  delay(300);
 }
 
-void loop()
-{
-  //
+void loop() {
+  
   // set the number of steps per revolutions, 4096 is typical for a 28BYJ-48
-  //
+
   stepper1.setStepsPerRevolution(4096);
   stepper2.setStepsPerRevolution(4096);
   stepper3.setStepsPerRevolution(4096);
   stepper4.setStepsPerRevolution(4096);
-  
-  //
+
   // set the speed in rotations/second and acceleration in rotations/second/second
-  //
+
   stepper1.setSpeedInRevolutionsPerSecond(.4);
   stepper1.setAccelerationInRevolutionsPerSecondPerSecond(.2);
   stepper2.setSpeedInRevolutionsPerSecond(.4);
@@ -87,19 +73,23 @@ void loop()
   stepper3.setAccelerationInRevolutionsPerSecondPerSecond(.2);
   stepper4.setSpeedInRevolutionsPerSecond(.4);
   stepper4.setAccelerationInRevolutionsPerSecondPerSecond(.2);
+
+  // setup motor 1 to move forward 4.0 revolutions
+
+  Serial.print(float(positions[0]));
+  Serial.print(" ");
+  Serial.print(float(positions[1]));
+  Serial.print(" ");
+  Serial.print(float(positions[2]));
+  Serial.print(" ");
+  Serial.println(float(positions[3])); 
   
+  stepper1.setupMoveInRevolutions(float(positions[0]));
+  stepper2.setupMoveInRevolutions(float(positions[1]));
+  stepper3.setupMoveInRevolutions(float(positions[2]));
+  stepper4.setupMoveInRevolutions(float(positions[3]));
   
-  //
-  // setup motor 1 to move forward 1.0 revolutions, this step does not actually move the motor
-  //
-  stepper1.setupMoveInRevolutions(8.0);
-  stepper2.setupMoveInRevolutions(8.0);
-  stepper3.setupMoveInRevolutions(8.0);
-  stepper4.setupMoveInRevolutions(8.0);
-  
-  //
   // execute the moves
-  //
   while((!stepper1.motionComplete()) || (!stepper2.motionComplete()) || (!stepper3.motionComplete()) || (!stepper4.motionComplete()))
   {
     stepper1.processMovement();
@@ -107,9 +97,22 @@ void loop()
     stepper3.processMovement();
     stepper4.processMovement();
   }
-  Serial.println("done");
-  while(true)   // wait forever so program only runs once
-    ;
 }
 
+
+void receiveEvent(int howMany) {
+  while(Wire.available() == 4) {
+    Wire.readBytes(positionBuffer,4);
+  }
+//  Serial.print(float(positions[0]));
+//  Serial.print(" ");
+//  Serial.print(float(positions[1]));
+//  Serial.print(" ");
+//  Serial.print(float(positions[2]));
+//  Serial.print(" ");
+//  Serial.println(float(positions[3])); 
+  for (int k = 0; k < 4; k++) {
+    positions[k] = positionBuffer[k];
+  }
+}
 

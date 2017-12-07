@@ -27,8 +27,8 @@ class UnipolarStepper
     UnipolarStepper();
     void connectToPins(byte in1PinNumber, byte in2PinNumber, byte in3PinNumber, byte in4PinNumber);
     void setStepMode(byte stepMode);
-    
-    
+
+
     void setStepsPerMillimeter(float motorStepPerMillimeter);
     float getCurrentPositionInMillimeters();
     void setCurrentPositionInMillimeters(float currentPositionInMillimeter);
@@ -40,7 +40,7 @@ class UnipolarStepper
     void moveToPositionInMillimeters(float absolutePositionToMoveToInMillimeters);
     void setupMoveInMillimeters(float absolutePositionToMoveToInMillimeters);
     float getCurrentVelocityInMillimetersPerSecond();
-    
+
 
     void setStepsPerRevolution(float motorStepPerRevolution);
     float getCurrentPositionInRevolutions();
@@ -67,7 +67,7 @@ class UnipolarStepper
     void moveToPositionInSteps(long absolutePositionToMoveToInSteps);
     void setupMoveInSteps(long absolutePositionToMoveToInSteps);
     bool motionComplete();
-    float getCurrentVelocityInStepsPerSecond(); 
+    float getCurrentVelocityInStepsPerSecond();
     bool processMovement(void);
 
 
@@ -78,7 +78,7 @@ class UnipolarStepper
     void setNextHalfStep(int direction);
     void setNextFullStep(int direction);
 
-    
+
     //
     // private member variables
     //
@@ -107,4 +107,3 @@ class UnipolarStepper
 
 // ------------------------------------ End ---------------------------------
 #endif
-

@@ -1,6 +1,6 @@
 #include <Wire.h>
 
-int I2C_address = 0xA;
+int I2C_address = 0x0A;
 
 #include <EEPROM.h>
 #include <avr/pgmspace.h>
@@ -11,25 +11,25 @@ byte positionBuffer[4] = {0, 0, 0, 0};
 bool newPosition = false;
 // pin assignments
 
-const int MOTOR1_IN1 = 13;
-const int MOTOR1_IN2 = 12;
-const int MOTOR1_IN3 = 11;
-const int MOTOR1_IN4 = 10;
+const int MOTOR1_IN1 = A3;
+const int MOTOR1_IN2 = 2;
+const int MOTOR1_IN3 = 13;
+const int MOTOR1_IN4 = 3;
 
-const int MOTOR2_IN1 = 9;
-const int MOTOR2_IN2 = 8;
-const int MOTOR2_IN3 = 7;
-const int MOTOR2_IN4 = 6;
+const int MOTOR2_IN1 = 4;
+const int MOTOR2_IN2 = 5;
+const int MOTOR2_IN3 = 6;
+const int MOTOR2_IN4 = 7;
 
-const int MOTOR3_IN1 = 5;
-const int MOTOR3_IN2 = 4;
-const int MOTOR3_IN3 = 3;
-const int MOTOR3_IN4 = 2;
+const int MOTOR3_IN1 = A0;
+const int MOTOR3_IN2 = A1;
+const int MOTOR3_IN3 = 8;
+const int MOTOR3_IN4 = A2;
 
-const int MOTOR4_IN1 = A0;
-const int MOTOR4_IN2 = A1;
-const int MOTOR4_IN3 = A2;
-const int MOTOR4_IN4 = A3;
+const int MOTOR4_IN1 = 12;
+const int MOTOR4_IN2 = 11;
+const int MOTOR4_IN3 = 10;
+const int MOTOR4_IN4 = 9;
 
 const int FULL_STEPS_PER_REVOLUTION = 2048;
 
