@@ -33,10 +33,11 @@ void setup() {
   // put your setup code here, to run once:
   Wire.begin();
   Serial.begin(9600);
-  moveToFive();
+  sunny();
+  //moveToFive();
   //cloudy();
   //dynamicCloudy();
-  delay(10000);
+  delay(30000);
   reset();
 }
 
@@ -55,6 +56,9 @@ void loop() {
       pos = getValue();
       Serial.println(pos);
       changeSingle(x, y, pos);
+    }
+    else if (input == "SUNNY"){
+      sunny();
     }
     else if (input == "RESET") {
       reset();
@@ -78,7 +82,7 @@ void reset() {
 void moveToFive() {
   for (int j = 0; j < 6; j++) {
     for (int k = 0; k < 4; k++) {
-      allPositions[j][k] = 10;
+      allPositions[j][k] = 5;
     }
   }
   delay(200);
@@ -162,17 +166,18 @@ int getValue() {
 }
 
 void sunny() {
-  byte sunnyPositions[6][4] = {{0, 0, 0, 0}, 
-                               {0, 2, 2, 0}, 
-                               {0, 3, 3, 0}, 
-                               {0, 3, 3, 0},
-                               {0, 2, 2, 0},
-                               {0, 0, 0, 0}};
+  byte sunnyPositions[6][4] = {{1, 5, 5, 1}, 
+                               {1, 5, 5, 1}, 
+                               {1, 5, 5, 1}, 
+                               {1, 5, 5, 1},
+                               {1, 5, 5, 1},
+                               {1, 5, 5, 1}};
   for (int j = 0; j < 6; j++) {
     for (int k = 0; k < 4; k++) {
       allPositions[j][k] = sunnyPositions[j][k];
     }
   }
+  delay(200);
   updateAll();
 }
 

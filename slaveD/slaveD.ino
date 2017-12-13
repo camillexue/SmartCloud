@@ -76,13 +76,13 @@ void loop() {
 
   // setup motor 1 to move forward 4.0 revolutions
 
-  Serial.print(float(positions[0]));
-  Serial.print(" ");
-  Serial.print(float(positions[1]));
-  Serial.print(" ");
-  Serial.print(float(positions[2]));
-  Serial.print(" ");
-  Serial.println(float(positions[3])); 
+//  Serial.print(float(positions[0]));
+//  Serial.print(" ");
+//  Serial.print(float(positions[1]));
+//  Serial.print(" ");
+//  Serial.print(float(positions[2]));
+//  Serial.print(" ");
+//  Serial.println(float(positions[3])); 
   
   stepper1.setupMoveInRevolutions(float(positions[0]));
   stepper2.setupMoveInRevolutions(float(positions[1]));
@@ -104,13 +104,13 @@ void receiveEvent(int howMany) {
   while(Wire.available() == 4) {
     Wire.readBytes(positionBuffer,4);
   }
-//  Serial.print(float(positions[0]));
-//  Serial.print(" ");
-//  Serial.print(float(positions[1]));
-//  Serial.print(" ");
-//  Serial.print(float(positions[2]));
-//  Serial.print(" ");
-//  Serial.println(float(positions[3])); 
+  Serial.print(float(positionBuffer[0]));
+  Serial.print(" ");
+  Serial.print(float(positionBuffer[1]));
+  Serial.print(" ");
+  Serial.print(float(positionBuffer[2]));
+  Serial.print(" ");
+  Serial.println(float(positionBuffer[3])); 
   for (int k = 0; k < 4; k++) {
     positions[k] = positionBuffer[k];
   }
